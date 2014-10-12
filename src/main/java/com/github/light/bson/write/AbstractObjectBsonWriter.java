@@ -14,11 +14,6 @@ abstract class AbstractObjectBsonWriter extends BsonWriteState {
         buffer.position(mark + 4);
     }
 
-    @Override
-    public BsonWriteState field(String name) {
-        return new FieldBsonWriteState(name, this);
-    }
-
     protected BsonWriteState end() throws IOException {
         buffer.putByte(BsonConstants.TERMINATOR);
         int size = buffer.position() - mark;
@@ -27,7 +22,70 @@ abstract class AbstractObjectBsonWriter extends BsonWriteState {
     }
 
     @Override
-    public BsonWriteState writeStringField(String field, String value) throws IOException {
-        return field(field).writeString(value);
+    public BsonWriteState writeString(String value) throws IOException {
+        writeField(BsonConstants.STRING).putString(value);
+        return this;
     }
+
+    @Override
+    public BsonWriteState writeNumber(double value) throws IOException {
+        writeField(BsonConstants.DOUBLE).putDouble(value);
+        return this;
+    }
+
+    @Override
+    public BsonWriteState startArray() throws IOException {
+        writeField(BsonConstants.ARRAY);
+        return new ArrayBsonWriteState(this);
+    }
+
+    @Override
+    public BsonWriteState startObject() throws IOException {
+        writeField(BsonConstants.EMBEDDED);
+        return new ObjectBsonWriteState(this);
+    }
+
+    @Override
+    public BsonWriteState writeBoolean(boolean value) throws IOException {
+        byte b = value ? BsonConstants.TRUE : BsonConstants.FALSE;
+        writeField(BsonConstants.BOOLEAN).putByte(b);
+        return this;
+    }
+
+    @Override
+    public BsonWriteState writeNull() throws IOException {
+        writeField(BsonConstants.NULL);
+        return this;
+    }
+
+    @Override
+    public BsonWriteState writeNumber(int value) throws IOException {
+        writeField(BsonConstants.INT32).putInt(value);
+        return this;
+    }
+
+    @Override
+    public BsonWriteState writeNumber(long value) throws IOException {
+        writeField(BsonConstants.INT64).putLong(value);
+        return this;
+    }
+
+    @Override
+    public BsonWriteState writeNumber(short value) throws IOException {
+        return writeNumber((int) value);
+    }
+
+    @Override
+    public BsonWriteState writeDatetime(long millis) throws IOException {
+        writeField(BsonConstants.UTC_DATE_TIME).putLong(millis);
+        return this;
+    }
+
+    protected abstract String popField();
+
+    private BsonBuffer writeField(byte type) throws IOException {
+        buffer.putField(popField(), type);
+        return buffer;
+    }
+
 }

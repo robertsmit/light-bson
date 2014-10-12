@@ -90,12 +90,6 @@ public class JacksonBsonWriter implements BsonWriter {
     }
 
     @Override
-    public BsonWriter writeStringField(String field, String value) throws IOException {
-        generator.writeStringField(field, value);
-        return this;
-    }
-
-    @Override
     public BsonWriter writeDatetime(long millis) throws IOException {
         throw new NotImplementedException();
     }

@@ -18,5 +18,4 @@ public interface Writer<Self> {
     Self writeNumber(double value) throws IOException;
     Self writeNumber(int value) throws IOException;
     Self writeNumber(long value) throws IOException;
-    Self writeStringField(String field, String value) throws IOException;
 }

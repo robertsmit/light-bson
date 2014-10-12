@@ -84,9 +84,4 @@ import java.io.IOException;
     public BsonWriteState writeDatetime(long millis) throws IOException {
         throw new IllegalStateException();
     }
-
-    @Override
-    public BsonWriteState writeStringField(String field, String value) throws IOException {
-        throw new IllegalStateException();
-    }
 }

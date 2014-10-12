@@ -87,12 +87,6 @@ public class SimpleBsonWriter implements BsonWriter {
     }
 
     @Override
-    public BsonWriter writeStringField(String field, String value) throws IOException {
-        state = state.writeStringField(field, value);
-        return this;
-    }
-
-    @Override
     public BsonWriter writeDatetime(long millis) throws IOException {
         state = state.writeDatetime(millis);
         return this;

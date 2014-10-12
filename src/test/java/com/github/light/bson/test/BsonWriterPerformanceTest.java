@@ -22,7 +22,7 @@ public class BsonWriterPerformanceTest {
     @Test
     public void test() throws IOException {
         assertBsonEquals(generateOther(), generateMine());
-        int iterations = 10000;
+        int iterations = 1000000;
         long startOther = System.currentTimeMillis();
         for (int i = 0; i < iterations; i++) {
             generateOther();
@@ -70,7 +70,7 @@ public class BsonWriterPerformanceTest {
     private void writeBson(BsonWriter writer, int i) throws IOException {
         writer
                 .startObject()
-                .writeStringField("value1", "value1String")
+                .field("value1").writeString("value1String")
                 .field("value2")
                 .writeString("value2String")
                 .field("valueI64")
@@ -116,7 +116,7 @@ public class BsonWriterPerformanceTest {
     private void writeBsonPerson(BsonWriter writer, String name, int age) throws IOException {
         writer
                 .startObject()
-                .writeStringField("name", name)
+                .field("name").writeString(name)
                 .field("age").writeNumber(age)
                 .endObject();
     }
