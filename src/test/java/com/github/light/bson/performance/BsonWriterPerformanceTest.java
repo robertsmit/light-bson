@@ -59,7 +59,7 @@ public class BsonWriterPerformanceTest extends AbstractPerformanceTest {
 
     private byte[] generateMine() throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream(0);
-        JsonGenerator generator = ag5Bson.createGenerator(out);
+        JsonGenerator generator = lightBson.createGenerator(out);
         writeBson(generator);
         generator.close();
         return out.toByteArray();

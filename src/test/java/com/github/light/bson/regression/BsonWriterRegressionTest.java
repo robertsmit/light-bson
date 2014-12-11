@@ -23,7 +23,7 @@ public class BsonWriterRegressionTest extends AbstractRegressionTest {
         byte[] expected = expectedOut.toByteArray();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        generator = ag5Bson.createGenerator(out);
+        generator = lightBson.createGenerator(out);
         writeExampleHelloWorld(generator);
         byte[] actual = out.toByteArray();
         assertBsonEquals(expected, actual);
@@ -49,7 +49,7 @@ public class BsonWriterRegressionTest extends AbstractRegressionTest {
         byte[] expected = expectedOut.toByteArray();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        generator = ag5Bson.createGenerator(out);
+        generator = lightBson.createGenerator(out);
         writeExampleArray(generator);
         byte[] actual = out.toByteArray();
 

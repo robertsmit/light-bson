@@ -1,10 +1,9 @@
-package com.ag5.light.bson.jackson;
+package com.github.light.bson.jackson;
 
-import com.ag5.light.bson.util.GrowingBuffer;
-import com.ag5.light.bson.util.GrowingByteBuffer;
-import com.ag5.light.bson.write.BsonStream;
-import com.ag5.light.bson.write.Cache;
-import com.ag5.light.bson.write.DefaultBsonWriter;
+import com.github.light.bson.util.GrowingByteBuffer;
+import com.github.light.bson.write.BsonStream;
+import com.github.light.bson.write.Cache;
+import com.github.light.bson.write.DefaultBsonWriter;
 
 import java.io.OutputStream;
 

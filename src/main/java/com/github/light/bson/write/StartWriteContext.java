@@ -1,4 +1,4 @@
-package com.ag5.light.bson.write;
+package com.github.light.bson.write;
 
 /**
  * Created by rob on 20-10-14.

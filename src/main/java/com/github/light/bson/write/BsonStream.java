@@ -1,6 +1,6 @@
-package com.ag5.light.bson.write;
+package com.github.light.bson.write;
 
-import com.ag5.light.bson.util.GrowingByteBuffer;
+import com.github.light.bson.util.GrowingByteBuffer;
 
 import java.io.Closeable;
 import java.io.IOException;

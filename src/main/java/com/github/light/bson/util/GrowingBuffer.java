@@ -1,4 +1,4 @@
-package com.ag5.light.bson.util;
+package com.github.light.bson.util;
 
 /**
  * Created by rob on 18-10-14.

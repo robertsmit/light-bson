@@ -1,6 +1,6 @@
 package com.github.light.bson.regression;
 
-import com.ag5.light.bson.jackson.BsonGeneratorFactory;
+import com.github.light.bson.jackson.BsonGeneratorFactory;
 import com.github.light.bson.AbstractBsonTest;
 import de.undercouch.bson4jackson.BsonFactory;
 
@@ -9,5 +9,5 @@ import de.undercouch.bson4jackson.BsonFactory;
  */
 public class AbstractRegressionTest extends AbstractBsonTest {
     protected static BsonFactory bson4jackson = new BsonFactory();
-    protected static BsonGeneratorFactory ag5Bson = new BsonGeneratorFactory();
+    protected static BsonGeneratorFactory lightBson = new BsonGeneratorFactory();
 }

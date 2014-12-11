@@ -1,6 +1,6 @@
-package com.ag5.light.bson.jackson;
+package com.github.light.bson.jackson;
 
-import com.ag5.light.bson.BsonWriter;
+import com.github.light.bson.BsonWriter;
 import com.fasterxml.jackson.core.*;
 
 import java.io.IOException;
