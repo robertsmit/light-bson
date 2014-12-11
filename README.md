@@ -3,6 +3,7 @@ light-bson
 
 Light-weight, good performing java bson writer with facade for the jackson JsonGenerator.
 
+``` 
 BsonGeneratorFactory lightBson = new BsonGeneratorFactory();
 ByteArrayOutputStream out = new ByteArrayOutputStream();
 generator = lightBson.createGenerator(out);
@@ -16,3 +17,4 @@ generator.writeNumber(1986);
 generator.writeEndArray();
 generator.writeEndObject();
 generator.close();
+``` 
