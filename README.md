@@ -6,7 +6,7 @@ Light-weight, good performing java bson writer with facade for the jackson JsonG
 ``` 
 BsonGeneratorFactory lightBson = new BsonGeneratorFactory();
 ByteArrayOutputStream out = new ByteArrayOutputStream();
-generator = lightBson.createGenerator(out);
+com.fasterxml.jackson.core.JsonGenerator generator = lightBson.createGenerator(out);
 
 generator.writeStartObject();
 generator.writeFieldName("BSON");
