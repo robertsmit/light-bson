@@ -1,11 +1,18 @@
 package com.github.light.bson;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import de.undercouch.bson4jackson.BsonFactory;
+
 import java.util.Arrays;
 
 /**
  * Created by rob on 11-12-14.
  */
 public class AbstractBsonTest {
+    protected static JsonFactory jackson = new JsonFactory();
+    protected static BsonFactory undercouchBson4jackson = new BsonFactory();
+    protected static JBsonGeneratorFactory lightBson4Jackson = new JBsonGeneratorFactory();
+
     protected void assertBsonEquals(byte[] expected, byte[] actual) {
         boolean condition = Arrays.equals(expected, actual);
         if (!condition) {

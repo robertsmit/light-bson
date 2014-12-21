@@ -1,11 +1,11 @@
-package com.github.light.bson.write;
+package com.github.light.bson.util;
 
 import java.nio.charset.Charset;
 
 /**
  * Created by rob on 12-10-14.
  */
-final class BsonConstants {
+public final class BsonConstants {
 
     private BsonConstants() {}
 
@@ -15,7 +15,7 @@ final class BsonConstants {
 
     public static final byte STRING = 2;
 
-    public static final byte EMBEDDED = 3;
+    public static final byte OBJECT = 3;
 
     public static final byte ARRAY = 4;
 

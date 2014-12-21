@@ -1,7 +1,7 @@
-package com.github.light.bson.jackson;
+package com.github.light.bson.generator;
 
-import com.github.light.bson.BsonWriter;
 import com.fasterxml.jackson.core.*;
+import com.github.light.bson.generator.BsonGenerator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,11 +11,11 @@ import java.math.BigInteger;
 /**
  * Created by rob on 19-10-14.
  */
-public class BsonGenerator extends JsonGenerator {
-    private BsonWriter writer;
+public class JBsonGenerator extends JsonGenerator {
+    private BsonGenerator writer;
     private boolean isClosed;
 
-    public BsonGenerator(BsonWriter writer) {
+    public JBsonGenerator(BsonGenerator writer) {
         this.writer = writer;
     }
 
