@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by rob on 19-12-14.
  */
-public class ArrayFieldReader extends DocumentFieldReader {
+public class ArrayFieldReader implements DocumentFieldReader {
     @Override
     public ReadState next(BsonInputStream in, byte type, DocumentReadState parent) throws IOException {
         in.skipFieldBytes();

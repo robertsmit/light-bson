@@ -75,7 +75,7 @@ public class DocumentReadState extends InnerReadState {
         public ReadState create(ReadState parent, BsonInputStream in) throws IOException {
             int size = in.readInt();
             return new DocumentReadState(JsonToken.START_OBJECT,
-                    JsonToken.END_OBJECT, new DocumentFieldReader(), size, parent);
+                    JsonToken.END_OBJECT, new ObjectFieldReader(), size, parent);
         }
 
         @Override

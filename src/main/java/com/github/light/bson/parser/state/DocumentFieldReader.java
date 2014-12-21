@@ -5,11 +5,8 @@ import com.github.light.bson.util.BsonInputStream;
 import java.io.IOException;
 
 /**
- * Created by rob on 19-12-14.
+ * Created by rob on 21-12-14.
  */
-public class DocumentFieldReader {
-    public ReadState next(BsonInputStream in, byte type, DocumentReadState parent) throws IOException {
-        String field = in.readFieldString();
-        return new FieldReadState(parent, type, field);
-    }
+public interface DocumentFieldReader {
+    ReadState next(BsonInputStream in, byte type, DocumentReadState parent) throws IOException;
 }

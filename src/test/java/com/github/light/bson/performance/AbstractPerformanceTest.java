@@ -4,8 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.github.light.bson.AbstractBsonTest;
 import com.github.light.bson.util.JsonObjectWriter;
 import com.github.light.bson.util.JsonWriter;
-import com.github.light.bson.util.JsonWriterUtils;
-import com.sun.xml.internal.stream.writers.WriterUtility;
+import com.github.light.bson.util.WriterExamples;
 import org.junit.Before;
 
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class AbstractPerformanceTest extends AbstractBsonTest {
         generator.writeStartObject();
 
         generator.writeFieldName("object");
-        JsonWriterUtils.forPolymorphicObject().write(generator);
+        WriterExamples.forPolymorphicObject().write(generator);
 
         if (i > 0) {
             writeRecursiveObject(i - 1, generator);
