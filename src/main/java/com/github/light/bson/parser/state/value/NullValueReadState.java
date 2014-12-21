@@ -11,7 +11,7 @@ import java.io.IOException;
  * Created by rob on 20-12-14.
  */
 public class NullValueReadState extends ValueReadState {
-    public static final Factory FACTORY = new Factory();
+    public static final ValueReadState.Factory FACTORY = new Factory();
 
     public NullValueReadState(ReadState parent) {
         super(parent, JsonToken.VALUE_NULL);

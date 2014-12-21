@@ -1,6 +1,5 @@
 package com.github.light.bson.util;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,12 +32,7 @@ public class BsonInputStream {
     }
 
     public byte readByte() throws IOException {
-        int read = stream.read();
-        DataInputStream s;
-        if (read == -1) {
-            throw new IOException();
-        }
-        return (byte) read;
+        return (byte) basicRead();
     }
 
     public double readDouble() throws IOException {
@@ -57,9 +51,18 @@ public class BsonInputStream {
         return sharedReadBuffer.toByteArray();
     }
 
+    public void skipFieldBytes() throws IOException {
+        int read;
+        do {
+            read = basicRead();
+        }
+        while (read > 0);
+    }
+
     public String readFieldString() throws IOException {
         byte[] encodedField = readFieldBytes();
-        return fieldCache.getDecodedField(encodedField);
+        //return new String(encodedField, BsonConstants.UTF8_CHARSET);
+ return fieldCache.getDecodedField(encodedField);
     }
 
     public int readInt() throws IOException {
@@ -120,5 +123,13 @@ public class BsonInputStream {
             }
             totalRead += read;
         }
+    }
+
+    private int basicRead() throws IOException {
+        int read = stream.read();
+        if (read == -1) {
+            throw new IOException();
+        }
+        return read;
     }
 }

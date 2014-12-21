@@ -10,6 +10,7 @@ import java.io.IOException;
 public class ArrayFieldReader extends DocumentFieldReader {
     @Override
     public ReadState next(BsonInputStream in, byte type, DocumentReadState parent) throws IOException {
-        return super.next(in, type, parent).next(in);
+        in.skipFieldBytes();
+        return FieldReadState.nextValue(in, type, parent);
     }
 }

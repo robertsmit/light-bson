@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by rob on 19-12-14.
  */
 public class LongValueReadState extends ValueReadState {
-    public static final Factory FACTORY = new Factory();
+    public static final ValueReadState.Factory FACTORY = new Factory();
 
     private final long value;
 

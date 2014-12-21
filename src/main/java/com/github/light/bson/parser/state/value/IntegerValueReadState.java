@@ -11,7 +11,7 @@ import java.io.IOException;
  * Created by rob on 19-12-14.
  */
 public class IntegerValueReadState extends ValueReadState {
-    public static final Factory FACTORY = new Factory();
+    public static final ValueReadState.Factory FACTORY = new Factory();
 
     private Integer value;
 
