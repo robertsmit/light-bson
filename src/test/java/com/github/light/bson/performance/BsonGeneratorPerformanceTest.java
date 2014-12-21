@@ -61,7 +61,7 @@ public class BsonGeneratorPerformanceTest extends AbstractPerformanceTest {
     }
 
     @Test
-    public void testReplay() throws IOException {
+    public void testReplay() throws IOException, InterruptedException {
         JsonWriter writer = JsonWriterUtils.forSimpleObject();
         JsonFactoryWriter undercouchWriter = new JsonFactoryWriter(undercouchBson4jackson, writer);
         byte[] input = undercouchWriter.generate();
@@ -72,6 +72,10 @@ public class BsonGeneratorPerformanceTest extends AbstractPerformanceTest {
 
         int iterations = 100000;
 
+
+        replayer.replay(undercouchBson4jackson.createParser(input));
+        System.gc();
+        Thread.sleep(1000);
         System.gc();
         long startOther = System.currentTimeMillis();
         for (int i = 0; i < iterations; i++) {
@@ -79,12 +83,16 @@ public class BsonGeneratorPerformanceTest extends AbstractPerformanceTest {
         }
         long durationOther = System.currentTimeMillis() - startOther;
 
+        replayer.replay(lightBson4Jackson.createParser(input));
+        System.gc();
+        Thread.sleep(1000);
         System.gc();
         long startMine = System.currentTimeMillis();
         for (int i = 0; i < iterations; i++) {
             replayer.replay(lightBson4Jackson.createParser(input));
         }
         long durationMine = System.currentTimeMillis() - startMine;
+
 
 
         System.out.println("other---");

@@ -61,8 +61,7 @@ public class BsonInputStream {
 
     public String readFieldString() throws IOException {
         byte[] encodedField = readFieldBytes();
-        //return new String(encodedField, BsonConstants.UTF8_CHARSET);
- return fieldCache.getDecodedField(encodedField);
+        return new String(encodedField, BsonConstants.UTF8_CHARSET);
     }
 
     public int readInt() throws IOException {
