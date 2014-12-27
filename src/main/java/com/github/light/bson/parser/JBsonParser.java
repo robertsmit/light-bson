@@ -12,6 +12,8 @@ import java.math.BigInteger;
  */
 public class JBsonParser extends JsonParser {
     private BsonParser parser;
+    private BsonToken currentToken;
+    private BsonToken lastClearedToken;
 
     public JBsonParser(BsonParser parser) {
         this.parser = parser;
@@ -39,8 +41,8 @@ public class JBsonParser extends JsonParser {
 
     @Override
     public JsonToken nextToken() throws IOException, JsonParseException {
-        BsonToken bsonToken = parser.nextToken();
-        return bsonToken.jsonToken;
+        currentToken = parser.nextToken();
+        return currentToken.jsonToken;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class JBsonParser extends JsonParser {
 
     @Override
     public boolean hasCurrentToken() {
-        return parser.getCurrentToken() != null;
+        return currentToken != null;
     }
 
     @Override
@@ -96,7 +98,8 @@ public class JBsonParser extends JsonParser {
 
     @Override
     public void clearCurrentToken() {
-        throw new UnsupportedOperationException();
+        lastClearedToken = currentToken;
+        currentToken = null;
     }
 
     @Override

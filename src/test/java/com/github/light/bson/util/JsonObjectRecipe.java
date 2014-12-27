@@ -3,13 +3,11 @@ package com.github.light.bson.util;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.GenericArrayType;
 
 /**
  * Created by rob on 21-12-14.
  */
-public abstract class JsonObjectWriter implements JsonWriter {
+public abstract class JsonObjectRecipe implements JsonRecipe {
     @Override
     public void write(JsonGenerator generator) throws IOException {
         generator.writeStartObject();

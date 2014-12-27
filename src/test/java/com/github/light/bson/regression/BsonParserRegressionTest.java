@@ -7,7 +7,7 @@ import com.github.light.bson.parser.DefaultBsonParser;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.util.JsonFactoryWriter;
 import com.github.light.bson.util.JsonReplayer;
-import com.github.light.bson.util.JsonWriter;
+import com.github.light.bson.util.JsonRecipe;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class BsonParserRegressionTest extends AbstractRegressionTest {
     @Override
-    protected void testRegression(JsonWriter writer) throws IOException {
+    protected void testRegression(JsonRecipe writer) throws IOException {
         byte[] original = new JsonFactoryWriter(undercouchBson4jackson, writer).generate();
         JsonReplayer replayer = new JsonReplayer(lightBson4Jackson);
         byte[] replayed = replayer.replay(original);

@@ -41,7 +41,8 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public JsonGenerator disable(Feature f) {
-        throw new UnsupportedOperationException();
+        System.out.println("disable: " + f);
+        return this;
     }
 
     @Override
@@ -91,7 +92,7 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeFieldName(SerializableString name) throws IOException {
-        throw new UnsupportedOperationException();
+        writeFieldName(name.getValue());
     }
 
     @Override

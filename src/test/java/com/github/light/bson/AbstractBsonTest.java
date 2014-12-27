@@ -9,9 +9,10 @@ import java.util.Arrays;
  * Created by rob on 11-12-14.
  */
 public class AbstractBsonTest {
-    protected static JsonFactory jackson = new JsonFactory();
-    protected static BsonFactory undercouchBson4jackson = new BsonFactory();
-    protected static JBsonGeneratorFactory lightBson4Jackson = new JBsonGeneratorFactory();
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    final protected static JsonFactory jackson = new JsonFactory();
+    final protected static BsonFactory undercouchBson4jackson = new BsonFactory();
+    final protected static JBsonFactory lightBson4Jackson = new JBsonFactory();
 
     protected void assertBsonEquals(byte[] expected, byte[] actual) {
         boolean condition = Arrays.equals(expected, actual);
@@ -24,17 +25,13 @@ public class AbstractBsonTest {
         }
     }
 
-    protected String bytesToHexDisplay(byte[] in) {
-        final StringBuilder builder = new StringBuilder();
-        for(byte b : in) {
-            if (b >= 65) {
-                builder.append((char)b);
-            }
-            else {
-                builder.append("|");
-                builder.append(String.format("x%02X", b));
-            }
+    protected String bytesToHexDisplay(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for ( int j = 0; j < bytes.length; j++ ) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
-        return builder.toString();
+        return new String(hexChars);
     }
 }

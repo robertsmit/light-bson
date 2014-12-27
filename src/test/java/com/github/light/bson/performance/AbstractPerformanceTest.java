@@ -2,8 +2,8 @@ package com.github.light.bson.performance;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.github.light.bson.AbstractBsonTest;
-import com.github.light.bson.util.JsonObjectWriter;
-import com.github.light.bson.util.JsonWriter;
+import com.github.light.bson.util.JsonObjectRecipe;
+import com.github.light.bson.util.JsonRecipe;
 import com.github.light.bson.util.WriterExamples;
 import org.junit.Before;
 
@@ -19,8 +19,8 @@ public class AbstractPerformanceTest extends AbstractBsonTest {
 
     }
 
-    public JsonWriter forBigPolymorphicObject() {
-        return new JsonObjectWriter() {
+    public JsonRecipe forBigPolymorphicObject() {
+        return new JsonObjectRecipe() {
             @Override
             protected void writeBody(JsonGenerator generator) throws IOException {
                 writeRecursiveObject(4, generator);

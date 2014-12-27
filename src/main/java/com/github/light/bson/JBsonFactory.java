@@ -1,9 +1,6 @@
 package com.github.light.bson;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.core.io.IOContext;
 import com.github.light.bson.parser.BsonParser;
 import com.github.light.bson.parser.DefaultBsonParser;
@@ -19,15 +16,27 @@ import java.io.*;
 /**
  * Created by rob on 11-12-14.
  */
-public class JBsonGeneratorFactory extends JsonFactory {
+public class JBsonFactory extends JsonFactory {
     private FieldCache fieldCache;
 
-    public JBsonGeneratorFactory() {
+    public JBsonFactory() {
         fieldCache = new FieldCache();
     }
 
+    public JBsonFactory(ObjectCodec oc) {
+        super(oc);
+    }
+
     @Override
-    public JBsonGenerator createGenerator(OutputStream out) {
+    public JBsonGenerator createGenerator(OutputStream out) throws IOException {
+        return createGenerator(out, JsonEncoding.UTF8);
+    }
+
+    @Override
+    public JBsonGenerator createGenerator(OutputStream out, JsonEncoding enc) throws IOException {
+        if (enc != JsonEncoding.UTF8) {
+            throw new IllegalStateException();
+        }
         BsonOutputStream bsonOut = new BsonOutputStream(out, fieldCache);
         return new JBsonGenerator(new DefaultBsonGenerator(bsonOut));
     }
@@ -44,6 +53,10 @@ public class JBsonGeneratorFactory extends JsonFactory {
         ByteArrayInputStream in = new ByteArrayInputStream(bytesIn);
         return createParser(in);
     }
+
+
+
+
 
     @Override
     protected JsonParser _createParser(InputStream in, IOContext ctxt) throws IOException {

@@ -1,7 +1,7 @@
 package com.github.light.bson.regression;
 
 import com.github.light.bson.AbstractBsonTest;
-import com.github.light.bson.util.JsonWriter;
+import com.github.light.bson.util.JsonRecipe;
 import com.github.light.bson.util.WriterExamples;
 import org.junit.Test;
 
@@ -41,5 +41,5 @@ public abstract class AbstractRegressionTest extends AbstractBsonTest {
         testRegression(WriterExamples.forEmptyArray());
     }
 
-    protected abstract void testRegression(JsonWriter writer) throws IOException;
+    protected abstract void testRegression(JsonRecipe writer) throws IOException;
 }

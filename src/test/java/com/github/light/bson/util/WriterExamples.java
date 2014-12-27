@@ -3,7 +3,6 @@ package com.github.light.bson.util;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
  * Created by rob on 21-12-14.
@@ -13,8 +12,8 @@ public class WriterExamples {
 
     }
 
-    public static JsonWriter forHelloWorld() {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forHelloWorld() {
+        return new JsonObjectRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("hello");
@@ -23,8 +22,8 @@ public class WriterExamples {
         };
     }
 
-    public static JsonWriter forPolymorphicArray() {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forPolymorphicArray() {
+        return new JsonObjectRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("BSON");
@@ -71,8 +70,8 @@ public class WriterExamples {
     }
 
 
-    public static JsonWriter forEmptyArray() {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forEmptyArray() {
+        return new JsonObjectRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("example");
@@ -82,7 +81,7 @@ public class WriterExamples {
         };
     }
 
-    public static JsonWriter forLongArray(long start, int size) {
+    public static JsonRecipe forLongArray(long start, int size) {
         long[] values = new long[size];
         for (int i = 0; i < size; i++) {
             values[i] = start + i;
@@ -90,8 +89,8 @@ public class WriterExamples {
         return forLongArray(values);
     }
 
-    public static JsonWriter forLongArray(final long[] values) {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forLongArray(final long[] values) {
+        return new JsonObjectRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("example");
@@ -104,7 +103,7 @@ public class WriterExamples {
         };
     }
 
-    public static JsonWriter forIntegerArrayInterval(int from, int to) {
+    public static JsonRecipe forIntegerArrayInterval(int from, int to) {
         int[] values = new int[to - from];
         for (int i = 0; i < values.length; i++) {
             values[i] = i + from;
@@ -112,8 +111,8 @@ public class WriterExamples {
         return forIntegerArray(values);
     }
 
-    public static JsonWriter forIntegerArray(final int[] values) {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forIntegerArray(final int[] values) {
+        return new JsonObjectRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("example");
@@ -126,8 +125,8 @@ public class WriterExamples {
         };
     }
 
-    public static JsonWriter forSimpleObject() {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forSimpleObject() {
+        return new JsonObjectRecipe() {
             @Override
             protected void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeArrayFieldStart("persons");
@@ -139,8 +138,8 @@ public class WriterExamples {
         };
     }
 
-    public static JsonWriter forPolymorphicObject() {
-        return new JsonObjectWriter() {
+    public static JsonRecipe forPolymorphicObject() {
+        return new JsonObjectRecipe() {
             @Override
             protected void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeStringField("BigPolyMorphicObjectName", "big");
