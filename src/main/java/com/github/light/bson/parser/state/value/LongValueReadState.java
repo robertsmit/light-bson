@@ -2,12 +2,14 @@ package com.github.light.bson.parser.state.value;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonToken;
+import com.github.light.bson.parser.BsonToken;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.ReadState;
 import com.github.light.bson.util.BsonConstants;
 import com.google.common.primitives.Ints;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by rob on 19-12-14.
@@ -18,7 +20,7 @@ public class LongValueReadState extends ValueReadState {
     private final long value;
 
     public LongValueReadState(ReadState parent, long value) {
-        super(parent, JsonToken.VALUE_NUMBER_INT);
+        super(parent, BsonToken.VALUE_NUMBER_INT);
         this.value = value;
     }
 
@@ -26,9 +28,14 @@ public class LongValueReadState extends ValueReadState {
     public int getIntValue() throws JsonParseException {
         int casted = (int) value;
         if (casted != value) {
-            throw new JsonParseException("value cannot be cast to in", null, null);
+            throw new JsonParseException("value cannot be cast to int", null, null);
         }
         return casted;
+    }
+
+    @Override
+    public Date getDateValue() {
+        return new Date(value);
     }
 
     @Override

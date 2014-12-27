@@ -63,34 +63,9 @@ public class BsonGeneratorPerformanceTest extends AbstractPerformanceTest {
         JsonFactoryWriter undercouchWriter = new JsonFactoryWriter(undercouchBson4jackson, writer);
         byte[] input = undercouchWriter.generate();
 
-        JsonReplayer replayer = new JsonReplayer(lightBson4Jackson);
-        assertBsonEquals(input, replayer.replay(lightBson4Jackson.createParser(input)));
-        assertBsonEquals(input, replayer.replay(undercouchBson4jackson.createParser(input)));
+        long durationOther = Math.min(testReplay(input, undercouchBson4jackson), testReplay(input, undercouchBson4jackson));
 
-        int iterations = 100000;
-
-
-        replayer.replay(undercouchBson4jackson.createParser(input));
-        System.gc();
-        Thread.sleep(1000);
-        System.gc();
-        long startOther = System.currentTimeMillis();
-        for (int i = 0; i < iterations; i++) {
-            replayer.replay(undercouchBson4jackson.createParser(input));
-        }
-        long durationOther = System.currentTimeMillis() - startOther;
-
-        replayer.replay(lightBson4Jackson.createParser(input));
-        System.gc();
-        Thread.sleep(1000);
-        System.gc();
-        long startMine = System.currentTimeMillis();
-        for (int i = 0; i < iterations; i++) {
-            replayer.replay(lightBson4Jackson.createParser(input));
-        }
-        long durationMine = System.currentTimeMillis() - startMine;
-
-
+        long durationMine = Math.min(testReplay(input, lightBson4Jackson), testReplay(input, lightBson4Jackson));
 
         System.out.println("other---");
         System.out.println(durationOther);
@@ -100,11 +75,26 @@ public class BsonGeneratorPerformanceTest extends AbstractPerformanceTest {
         long perc = (durationMine * 100) / durationOther;
         System.out.println(perc);
         Assert.assertTrue(perc < 100);
-
     }
 
 
-    private JsonFactoryWriter writeFor(JsonFactory factory) throws IOException {
+    public long testReplay(byte[] input, JsonFactory factory) throws IOException, InterruptedException {
+        JsonReplayer replayer = new JsonReplayer(factory);
+        assertBsonEquals(input, replayer.replay(factory.createParser(input)));
+
+        int iterations = 110000;
+        replayer.replay(lightBson4Jackson.createParser(input));
+        System.gc();
+        long startMine = System.currentTimeMillis();
+        for (int i = 0; i < iterations; i++) {
+            replayer.replay(lightBson4Jackson.createParser(input));
+        }
+        return System.currentTimeMillis() - startMine;
+    }
+
+
+
+        private JsonFactoryWriter writeFor(JsonFactory factory) throws IOException {
         return new JsonFactoryWriter(factory, forBigPolymorphicObject());
     }
 }

@@ -1,6 +1,7 @@
 package com.github.light.bson.parser.state;
 
 import com.fasterxml.jackson.core.JsonToken;
+import com.github.light.bson.parser.BsonToken;
 import com.github.light.bson.util.BsonConstants;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.value.LongValueReadState;
@@ -28,8 +29,8 @@ public class FieldReadState extends InnerReadState {
     }
 
     @Override
-    public JsonToken getCurrentToken() {
-        return JsonToken.FIELD_NAME;
+    public BsonToken getCurrentToken() {
+        return BsonToken.FIELD_NAME;
     }
 
     @Override
@@ -60,6 +61,7 @@ public class FieldReadState extends InnerReadState {
             factories.add(IntegerValueReadState.FACTORY);
             factories.add(DoubleValueReadState.FACTORY);
             factories.add(BooleanValueReadState.FACTORY);
+            factories.add(DateValueReadState.FACTORY);
             factories.add(NullValueReadState.FACTORY);
             factories.add(DocumentReadState.OBJECT_FACTORY);
             factories.add(DocumentReadState.ARRAY_FACTORY);

@@ -1,34 +1,23 @@
 package com.github.light.bson.parser.state.value;
 
-import com.fasterxml.jackson.core.JsonToken;
 import com.github.light.bson.parser.BsonToken;
-import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.ReadState;
 import com.github.light.bson.util.BsonConstants;
+import com.github.light.bson.util.BsonInputStream;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
- * Created by rob on 19-12-14.
+ * Created by rob on 27-12-14.
  */
-public class IntegerValueReadState extends ValueReadState {
+public class DateValueReadState extends ValueReadState {
     public static final ValueReadState.Factory FACTORY = new Factory();
+    private final long value;
 
-    private Integer value;
-
-    public IntegerValueReadState(ReadState parent, Integer value) {
-        super(parent, BsonToken.VALUE_NUMBER_INT);
+    public DateValueReadState(ReadState parent, long value) {
+        super(parent, BsonToken.VALUE_DATE_TIME);
         this.value = value;
-    }
-
-    @Override
-    public int getIntValue() {
-        return value;
-    }
-
-    @Override
-    public double getDoubleValue() {
-        return value;
     }
 
     @Override
@@ -37,20 +26,25 @@ public class IntegerValueReadState extends ValueReadState {
     }
 
     @Override
+    public Date getDateValue() {
+        return new Date(value);
+    }
+
+    @Override
     protected String valueString() {
-        return Integer.toString(value);
+        return new Date(value).toString();
     }
 
     private static class Factory implements ValueReadState.Factory {
         @Override
         public ValueReadState create(ReadState parent, BsonInputStream in) throws IOException {
-            int value = in.readInt();
-            return new IntegerValueReadState(parent, value);
+            long value = in.readLong();
+            return new DateValueReadState(parent, value);
         }
 
         @Override
         public byte getBsonType() {
-            return BsonConstants.INT32;
+            return BsonConstants.UTC_DATE_TIME;
         }
     }
 }

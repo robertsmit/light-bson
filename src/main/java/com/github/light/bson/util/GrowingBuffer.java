@@ -42,9 +42,9 @@ public abstract class GrowingBuffer {
         }
     }
 
-    protected abstract void capacity(int newCapacity);
+    protected abstract void setCapacity(int newCapacity);
 
-    abstract protected int capacity();
+    protected abstract int capacity();
 
     private void grow(int minCapacity) {
         // overflow-conscious code
@@ -59,6 +59,6 @@ public abstract class GrowingBuffer {
             }
             newCapacity = Integer.MAX_VALUE;
         }
-        capacity(newCapacity);
+        setCapacity(newCapacity);
     }
 }

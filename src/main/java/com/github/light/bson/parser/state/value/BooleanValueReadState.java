@@ -1,6 +1,7 @@
 package com.github.light.bson.parser.state.value;
 
 import com.fasterxml.jackson.core.JsonToken;
+import com.github.light.bson.parser.BsonToken;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.ReadState;
 import com.github.light.bson.util.BsonConstants;
@@ -16,7 +17,7 @@ public class BooleanValueReadState extends ValueReadState {
     private boolean value;
 
     public BooleanValueReadState(ReadState parent, Boolean value) {
-        super(parent, value ? JsonToken.VALUE_TRUE : JsonToken.VALUE_FALSE);
+        super(parent, value ? BsonToken.VALUE_TRUE : BsonToken.VALUE_FALSE);
         this.value = value;
     }
 

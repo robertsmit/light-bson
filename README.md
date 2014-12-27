@@ -1,7 +1,7 @@
 light-bson
 ==========
 
-Light-weight, good performing java bson writer with facade for the jackson JsonGenerator.
+Light-weight, good performing java bson generator with facade for the jackson JsonGenerator.
 
 ``` 
 BsonGeneratorFactory lightBson = new BsonGeneratorFactory();

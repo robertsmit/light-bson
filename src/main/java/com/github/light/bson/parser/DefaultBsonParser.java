@@ -8,6 +8,7 @@ import com.github.light.bson.util.BsonInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 /**
  * Created by rob on 18-12-14.
@@ -37,7 +38,7 @@ public class DefaultBsonParser implements BsonParser {
     }
 
     @Override
-    public JsonToken getCurrentToken() {
+    public BsonToken getCurrentToken() {
         return state.getCurrentToken();
     }
 
@@ -52,8 +53,13 @@ public class DefaultBsonParser implements BsonParser {
     }
 
     @Override
-    public long getLongValue() {
+    public long getLongValue() throws JsonParseException {
         return state.getLongValue();
+    }
+
+    @Override
+    public Date getDateValue() {
+        return state.getDateValue();
     }
 
     @Override
@@ -62,7 +68,7 @@ public class DefaultBsonParser implements BsonParser {
     }
 
     @Override
-    public String getvalueAsString(String def) {
+    public String getValueAsString(String def) {
         return state.getValueAsString(def);
     }
 
@@ -72,13 +78,13 @@ public class DefaultBsonParser implements BsonParser {
     }
 
     @Override
-    public JsonToken nextToken() throws IOException {
+    public BsonToken nextToken() throws IOException {
         state = state.next(in);
         return state.getCurrentToken();
     }
 
     @Override
-    public JsonToken nextValue() throws IOException {
+    public BsonToken nextValue() throws IOException {
         state = state.next(in).toValueContext(in);
         return state.getCurrentToken();
     }

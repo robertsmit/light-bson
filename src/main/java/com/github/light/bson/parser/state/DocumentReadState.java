@@ -1,6 +1,6 @@
 package com.github.light.bson.parser.state;
 
-import com.fasterxml.jackson.core.JsonToken;
+import com.github.light.bson.parser.BsonToken;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.value.ValueReadState;
 import com.github.light.bson.util.BsonConstants;
@@ -14,20 +14,21 @@ public class DocumentReadState extends InnerReadState {
     public static final ValueReadState.Factory ARRAY_FACTORY = new ArrayFactory();
     public static final ValueReadState.Factory OBJECT_FACTORY = new ObjectFactory();
 
-    private JsonToken startToken;
-    private JsonToken endToken;
+    private BsonToken startToken;
+    private BsonToken endToken;
     private int size;
     private DocumentFieldReader fieldReader;
 
-    private DocumentReadState(JsonToken startToken, JsonToken endToken, DocumentFieldReader fieldReader, int size, ReadState parent) throws IOException {
+    private DocumentReadState(BsonToken startToken, BsonToken endToken, DocumentFieldReader fieldReader, int size, ReadState parent) throws IOException {
         super(parent);
         this.startToken = startToken;
         this.endToken = endToken;
         this.fieldReader = fieldReader;
+        this.size = size;
     }
 
     @Override
-    public JsonToken getCurrentToken() {
+    public BsonToken getCurrentToken() {
         return startToken;
     }
 
@@ -60,8 +61,8 @@ public class DocumentReadState extends InnerReadState {
         @Override
         public ReadState create(ReadState parent, BsonInputStream in) throws IOException {
             int size = in.readInt();
-            return new DocumentReadState(JsonToken.START_ARRAY,
-                    JsonToken.END_ARRAY, new ArrayFieldReader(), size, parent);
+            return new DocumentReadState(BsonToken.START_ARRAY,
+                    BsonToken.END_ARRAY, new ArrayFieldReader(), size, parent);
         }
 
         @Override
@@ -74,8 +75,8 @@ public class DocumentReadState extends InnerReadState {
         @Override
         public ReadState create(ReadState parent, BsonInputStream in) throws IOException {
             int size = in.readInt();
-            return new DocumentReadState(JsonToken.START_OBJECT,
-                    JsonToken.END_OBJECT, new ObjectFieldReader(), size, parent);
+            return new DocumentReadState(BsonToken.START_OBJECT,
+                    BsonToken.END_OBJECT, new ObjectFieldReader(), size, parent);
         }
 
         @Override

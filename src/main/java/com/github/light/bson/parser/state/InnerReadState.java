@@ -19,10 +19,6 @@ public abstract class InnerReadState extends AbstractReadState {
         return parent.getCurrentName();
     }
 
-    public ReadState getParent() {
-        return parent;
-    }
-
     @Override
     public ReadState next(BsonInputStream in) throws IOException {
         return parent.next(in);

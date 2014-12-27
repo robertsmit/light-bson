@@ -1,6 +1,7 @@
 package com.github.light.bson.parser.state.value;
 
 import com.fasterxml.jackson.core.JsonToken;
+import com.github.light.bson.parser.BsonToken;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.ReadState;
 import com.github.light.bson.util.BsonConstants;
@@ -14,7 +15,7 @@ public class NullValueReadState extends ValueReadState {
     public static final ValueReadState.Factory FACTORY = new Factory();
 
     public NullValueReadState(ReadState parent) {
-        super(parent, JsonToken.VALUE_NULL);
+        super(parent, BsonToken.VALUE_NULL);
     }
 
     @Override

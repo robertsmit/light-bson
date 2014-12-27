@@ -61,7 +61,7 @@ public class GrowingByteBuffer extends GrowingBuffer {
         return buffer.length;
     }
 
-    protected void capacity(int newCapacity) {
+    protected void setCapacity(int newCapacity) {
         buffer = Arrays.copyOf(buffer, newCapacity);
     }
 }

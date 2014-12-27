@@ -7,6 +7,7 @@ import com.github.light.bson.generator.state.WriteState;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 /**
  * Created by rob on 12-10-14.
@@ -95,6 +96,12 @@ public class DefaultBsonGenerator implements BsonGenerator {
     public BsonGenerator writeDatetime(long millis) throws IOException {
         state = state.writeDatetime(millis, out);
         return this;
+    }
+
+    @Override
+    public BsonGenerator writeDatetime(Date date) throws IOException {
+        long millis = date.getTime();
+        return writeDatetime(millis);
     }
 
     @Override

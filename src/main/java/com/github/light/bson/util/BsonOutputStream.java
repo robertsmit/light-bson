@@ -11,16 +11,17 @@ import java.io.OutputStream;
  * Created by rob on 12-10-14.
  */
 public class BsonOutputStream implements Closeable {
+    public static final int DEFAULT_INITIAL_BUFFER_SIZE = 2000;
     private GrowingByteBuffer buffer;
     private FieldCache fieldCache;
     private OutputStream out;
 
     public BsonOutputStream(OutputStream out) {
-        this(out, 2048, new FieldCache());
+        this(out, 2000, new FieldCache());
     }
 
     public BsonOutputStream(OutputStream out, FieldCache cache) {
-        this(out, 2048, cache);
+        this(out, DEFAULT_INITIAL_BUFFER_SIZE, cache);
     }
 
     public BsonOutputStream(OutputStream out, int initialBufferSize, FieldCache fieldCache) {

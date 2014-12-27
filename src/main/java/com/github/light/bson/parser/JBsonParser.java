@@ -39,12 +39,13 @@ public class JBsonParser extends JsonParser {
 
     @Override
     public JsonToken nextToken() throws IOException, JsonParseException {
-        return parser.nextToken();
+        BsonToken bsonToken = parser.nextToken();
+        return bsonToken.jsonToken;
     }
 
     @Override
     public JsonToken nextValue() throws IOException, JsonParseException {
-        return parser.nextValue();
+        return parser.nextValue().jsonToken;
     }
 
     @Override
@@ -60,7 +61,7 @@ public class JBsonParser extends JsonParser {
 
     @Override
     public JsonToken getCurrentToken() {
-        return parser.getCurrentToken();
+        return parser.getCurrentToken().jsonToken;
     }
 
     @Override
@@ -185,6 +186,6 @@ public class JBsonParser extends JsonParser {
 
     @Override
     public String getValueAsString(String def) throws IOException {
-        return parser.getvalueAsString(def);
+        return parser.getValueAsString(def);
     }
 }

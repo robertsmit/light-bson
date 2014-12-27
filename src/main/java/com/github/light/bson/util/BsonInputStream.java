@@ -69,11 +69,13 @@ public class BsonInputStream {
         return bytes[0] & 0xff
                 | (bytes[1] & 0xff) << 8
                 | (bytes[2] & 0xff) << 16
+                // the sign is on the last bit so no AND is needed
                 | (bytes[3]) << 24;
     }
 
     public long readLong() throws IOException {
         byte[] bytes = read(8);
+        // the sign is on the last bit so no AND is needed
         return ((((long) bytes[7]) << 56) |
                 (((long) bytes[6] & 0xff) << 48) |
                 (((long) bytes[5] & 0xff) << 40) |

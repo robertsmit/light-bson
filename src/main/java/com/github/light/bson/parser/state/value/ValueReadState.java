@@ -1,6 +1,7 @@
 package com.github.light.bson.parser.state.value;
 
 import com.fasterxml.jackson.core.JsonToken;
+import com.github.light.bson.parser.BsonToken;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.parser.state.InnerReadState;
 import com.github.light.bson.parser.state.ReadState;
@@ -11,15 +12,15 @@ import java.io.IOException;
  * Created by rob on 19-12-14.
  */
 public abstract class ValueReadState extends InnerReadState {
-    private JsonToken token;
+    private BsonToken token;
 
-    public ValueReadState(ReadState parent, JsonToken token) {
+    public ValueReadState(ReadState parent, BsonToken token) {
         super(parent);
         this.token = token;
     }
 
     @Override
-    public JsonToken getCurrentToken() {
+    public BsonToken getCurrentToken() {
         return token;
     }
 

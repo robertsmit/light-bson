@@ -27,21 +27,26 @@ public class JBsonGeneratorFactory extends JsonFactory {
     }
 
     @Override
-    public JsonGenerator createGenerator(OutputStream out) {
+    public JBsonGenerator createGenerator(OutputStream out) {
         BsonOutputStream bsonOut = new BsonOutputStream(out, fieldCache);
         return new JBsonGenerator(new DefaultBsonGenerator(bsonOut));
     }
 
     @Override
-    public JsonParser createParser(InputStream in) throws IOException {
+    public JBsonParser createParser(InputStream in) throws IOException {
         BsonInputStream bsonIn = new BsonInputStream(in, fieldCache);
         BsonParser parser = new DefaultBsonParser(bsonIn);
         return new JBsonParser(parser);
     }
 
     @Override
-    public JsonParser createParser(byte[] bytesIn) throws IOException {
+    public JBsonParser createParser(byte[] bytesIn) throws IOException {
         ByteArrayInputStream in = new ByteArrayInputStream(bytesIn);
         return createParser(in);
+    }
+
+    @Override
+    protected JsonParser _createParser(InputStream in, IOContext ctxt) throws IOException {
+        return super._createParser(in, ctxt);
     }
 }

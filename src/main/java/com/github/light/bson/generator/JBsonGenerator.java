@@ -1,22 +1,22 @@
 package com.github.light.bson.generator;
 
 import com.fasterxml.jackson.core.*;
-import com.github.light.bson.generator.BsonGenerator;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Date;
 
 /**
  * Created by rob on 19-10-14.
  */
 public class JBsonGenerator extends JsonGenerator {
-    private BsonGenerator writer;
+    private BsonGenerator generator;
     private boolean isClosed;
 
-    public JBsonGenerator(BsonGenerator writer) {
-        this.writer = writer;
+    public JBsonGenerator(BsonGenerator generator) {
+        this.generator = generator;
     }
 
     @Override
@@ -66,27 +66,27 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeStartArray() throws IOException {
-        writer.writeStartArray();
+        generator.writeStartArray();
     }
 
     @Override
     public void writeEndArray() throws IOException {
-        writer.writeEndArray();
+        generator.writeEndArray();
     }
 
     @Override
     public void writeStartObject() throws IOException {
-        writer.writeStartObject();
+        generator.writeStartObject();
     }
 
     @Override
     public void writeEndObject() throws IOException {
-        writer.writeEndObject();
+        generator.writeEndObject();
     }
 
     @Override
     public void writeFieldName(String name) throws IOException {
-        writer.writeField(name);
+        generator.writeField(name);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeString(String text) throws IOException {
-        writer.writeString(text);
+        generator.writeString(text);
     }
 
     @Override
@@ -166,12 +166,12 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeNumber(int v) throws IOException {
-        writer.writeNumber(v);
+        generator.writeNumber(v);
     }
 
     @Override
     public void writeNumber(long v) throws IOException {
-        writer.writeNumber(v);
+        generator.writeNumber(v);
     }
 
     @Override
@@ -181,12 +181,12 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeNumber(double d) throws IOException {
-        writer.writeNumber(d);
+        generator.writeNumber(d);
     }
 
     @Override
     public void writeNumber(float f) throws IOException {
-        writer.writeNumber(f);
+        generator.writeNumber(f);
     }
 
     @Override
@@ -201,12 +201,20 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeBoolean(boolean state) throws IOException {
-        writer.writeBoolean(state);
+        generator.writeBoolean(state);
     }
 
     @Override
     public void writeNull() throws IOException {
-        writer.writeNull();
+        generator.writeNull();
+    }
+
+    public void writeDateTime(long millis) throws IOException {
+        generator.writeDatetime(millis);
+    }
+
+    public void writeDateTime(Date date) throws IOException {
+        generator.writeDatetime(date);
     }
 
     @Override
@@ -236,6 +244,6 @@ public class JBsonGenerator extends JsonGenerator {
     @Override
     public void close() throws IOException {
         isClosed = true;
-        writer.close();
+        generator.close();
     }
 }
