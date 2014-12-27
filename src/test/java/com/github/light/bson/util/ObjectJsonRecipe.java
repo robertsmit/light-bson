@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Created by rob on 21-12-14.
  */
-public abstract class JsonObjectRecipe implements JsonRecipe {
+public abstract class ObjectJsonRecipe implements JsonRecipe {
     @Override
     public void write(JsonGenerator generator) throws IOException {
         generator.writeStartObject();

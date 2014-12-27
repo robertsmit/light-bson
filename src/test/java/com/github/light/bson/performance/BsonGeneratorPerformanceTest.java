@@ -1,10 +1,10 @@
 package com.github.light.bson.performance;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.github.light.bson.util.TestCookBook;
 import com.github.light.bson.util.JsonFactoryWriter;
 import com.github.light.bson.util.JsonReplayer;
 import com.github.light.bson.util.JsonRecipe;
-import com.github.light.bson.util.WriterExamples;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class BsonGeneratorPerformanceTest extends AbstractPerformanceTest {
 
     @Test
     public void testReplay() throws IOException, InterruptedException {
-        JsonRecipe writer = WriterExamples.forSimpleObject();
+        JsonRecipe writer = TestCookBook.simpleObject();
         JsonFactoryWriter undercouchWriter = new JsonFactoryWriter(undercouchBson4jackson, writer);
         byte[] input = undercouchWriter.generate();
 

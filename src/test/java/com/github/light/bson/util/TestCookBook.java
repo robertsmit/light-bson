@@ -7,13 +7,12 @@ import java.io.IOException;
 /**
  * Created by rob on 21-12-14.
  */
-public class WriterExamples {
-    private WriterExamples() {
-
+public class TestCookBook {
+    private TestCookBook() {
     }
 
-    public static JsonRecipe forHelloWorld() {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe helloWorld() {
+        return new ObjectJsonRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("hello");
@@ -22,8 +21,8 @@ public class WriterExamples {
         };
     }
 
-    public static JsonRecipe forPolymorphicArray() {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe polymorphicArray() {
+        return new ObjectJsonRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("BSON");
@@ -70,8 +69,8 @@ public class WriterExamples {
     }
 
 
-    public static JsonRecipe forEmptyArray() {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe emptyArray() {
+        return new ObjectJsonRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("example");
@@ -81,16 +80,16 @@ public class WriterExamples {
         };
     }
 
-    public static JsonRecipe forLongArray(long start, int size) {
+    public static JsonRecipe longArray(long start, int size) {
         long[] values = new long[size];
         for (int i = 0; i < size; i++) {
             values[i] = start + i;
         }
-        return forLongArray(values);
+        return longArray(values);
     }
 
-    public static JsonRecipe forLongArray(final long[] values) {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe longArray(final long[] values) {
+        return new ObjectJsonRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("example");
@@ -103,16 +102,16 @@ public class WriterExamples {
         };
     }
 
-    public static JsonRecipe forIntegerArrayInterval(int from, int to) {
+    public static JsonRecipe integerArrayInterval(int from, int to) {
         int[] values = new int[to - from];
         for (int i = 0; i < values.length; i++) {
             values[i] = i + from;
         }
-        return forIntegerArray(values);
+        return integerArray(values);
     }
 
-    public static JsonRecipe forIntegerArray(final int[] values) {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe integerArray(final int[] values) {
+        return new ObjectJsonRecipe() {
             @Override
             public void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeFieldName("example");
@@ -125,21 +124,21 @@ public class WriterExamples {
         };
     }
 
-    public static JsonRecipe forSimpleObject() {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe simpleObject() {
+        return new ObjectJsonRecipe() {
             @Override
             protected void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeArrayFieldStart("persons");
                 for (String s : new String[] { "Karl", "Els", "Gregory", "John", "Mary", "Anton", "Elskse" }) {
-                    writePerson(generator, s, s.hashCode());
+                    person(s, s.hashCode()).write(generator);
                 }
                 generator.writeEndArray();
             }
         };
     }
 
-    public static JsonRecipe forPolymorphicObject() {
-        return new JsonObjectRecipe() {
+    public static JsonRecipe polymorphicObject() {
+        return new ObjectJsonRecipe() {
             @Override
             protected void writeBody(JsonGenerator generator) throws IOException {
                 generator.writeStringField("BigPolyMorphicObjectName", "big");
@@ -164,39 +163,43 @@ public class WriterExamples {
                 generator.writeNullField("valueNull");
 
                 generator.writeFieldName("valueSubObject1");
-                writePerson(generator, "Els", 33);
+                person("Els", 33).write(generator);
 
                 generator.writeFieldName("valueSubObject2");
-                writePerson(generator, "John", 25);
+                person("John", 25).write(generator);
 
                 generator.writeFieldName("valueSubObject3");
-                writePerson(generator, "Mary", 65);
+                person("Mary", 65).write(generator);
 
                 generator.writeFieldName("integerArray");
-                forIntegerArrayInterval(-100, 100).write(generator);
+                integerArrayInterval(-100, 100).write(generator);
 
                 generator.writeFieldName("emptyArray");
-                forEmptyArray().write(generator);
+                emptyArray().write(generator);
 
                 generator.writeFieldName("longArray");
-                forLongArray(1000000000000000L, 1000).write(generator);
+                longArray(1000000000000000L, 1000).write(generator);
 
                 generator.writeFieldName("polyArray");
-                forPolymorphicArray().write(generator);
+                polymorphicArray().write(generator);
 
                 generator.writeArrayFieldStart("valueObjectArray");
                 for (String s : new String[] { "Karl", "Els" }) {
-                    writePerson(generator, s, s.hashCode());
+                    person(s, s.hashCode()).write(generator);
                 }
                 generator.writeEndArray();
             }
         };
     }
 
-    private static void writePerson(JsonGenerator generator, String name, int age) throws IOException {
-        generator.writeStartObject();
-        generator.writeStringField("name", name);
-        generator.writeNumberField("age", age);
-        generator.writeEndObject();
+    public static JsonRecipe person(final String name, final int age) throws IOException {
+        return new ObjectJsonRecipe() {
+
+            @Override
+            protected void writeBody(JsonGenerator generator) throws IOException {
+                generator.writeStringField("name", name);
+                generator.writeNumberField("age", age);
+            }
+        };
     }
 }

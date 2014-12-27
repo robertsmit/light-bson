@@ -1,8 +1,8 @@
 package com.github.light.bson.regression;
 
 import com.github.light.bson.AbstractBsonTest;
+import com.github.light.bson.util.TestCookBook;
 import com.github.light.bson.util.JsonRecipe;
-import com.github.light.bson.util.WriterExamples;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -17,28 +17,28 @@ public abstract class AbstractRegressionTest extends AbstractBsonTest {
      */
     @Test
     public void testExampleHelloWorld() throws IOException {
-        testRegression(WriterExamples.forHelloWorld());
+        testRegression(TestCookBook.helloWorld());
     }
 
     @Test
     public void testArray() throws IOException {
-        testRegression(WriterExamples.forPolymorphicArray());
+        testRegression(TestCookBook.polymorphicArray());
     }
 
     @Test
     public void testIntegerArray() throws IOException {
-        testRegression(WriterExamples.forIntegerArrayInterval(-3000, 3000));
+        testRegression(TestCookBook.integerArrayInterval(-3000, 3000));
     }
 
     @Test
     public void testLongArray() throws IOException {
-        testRegression(WriterExamples.forLongArray(-30000000000L, 100));
-        testRegression(WriterExamples.forLongArray(30000000000L, 100));
+        testRegression(TestCookBook.longArray(-30000000000L, 100));
+        testRegression(TestCookBook.longArray(30000000000L, 100));
     }
 
     @Test
     public void testEmptyArray() throws IOException {
-        testRegression(WriterExamples.forEmptyArray());
+        testRegression(TestCookBook.emptyArray());
     }
 
     protected abstract void testRegression(JsonRecipe writer) throws IOException;
