@@ -111,7 +111,7 @@ public interface BsonParser {
      * Iteration method that will advance stream enough
      * to determine type of the next token that is a value type
      * (including Bson Array and Object start/end markers).
-     * Or put another way, nextToken() will be called once,
+     * Or putAll another way, nextToken() will be called once,
      * and if {@link BsonToken#FIELD_NAME} is returned, another
      * time to get the value for the field.
      * Method is most useful for iterating over value entries

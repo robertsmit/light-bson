@@ -1,8 +1,5 @@
 package com.github.light.bson.util;
 
-import com.github.light.bson.util.BsonConstants;
-import com.github.light.bson.util.GrowingByteBuffer;
-
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -53,6 +50,13 @@ public class BsonOutputStream implements Closeable {
     public void writeBoolean(boolean value) throws IOException {
         onWrite(1);
         write(value ? BsonConstants.TRUE : BsonConstants.FALSE);
+    }
+
+    public void writeBinary(byte subtype, byte[] bytes, int offset, int length) throws IOException {
+        onWrite(4 + 1 + length);
+        writeInt(length);
+        write(subtype);
+        write(bytes, offset, length);
     }
 
     public void writeDouble(double value) throws IOException {
@@ -118,11 +122,15 @@ public class BsonOutputStream implements Closeable {
     }
 
     private void write(byte b) {
-        buffer.putUnsafe(b);
+        buffer.unsafePut(b);
     }
 
     private void write(byte[] b) {
-        buffer.putUnsafe(b);
+        buffer.unsafePutAll(b, 0, b.length);
+    }
+
+    private void write(byte[] b, int offset, int length) {
+        buffer.unsafePutAll(b, offset, length);
     }
 
     private void onWrite(int size) {

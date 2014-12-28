@@ -30,6 +30,13 @@ public abstract class InnerWriteState extends WriteState {
     }
 
     @Override
+    public WriteState writeBinary(BsonOutputStream out, byte subtype, byte[] value, int offset, int length) throws IOException {
+        writeField(BsonConstants.BINARY, out);
+        out.writeBinary(subtype, value, offset, length);
+        return this;
+    }
+
+    @Override
     public WriteState writeStartArray(BsonOutputStream out) throws IOException {
         writeField(BsonConstants.ARRAY, out);
         int mark = out.startDocument();

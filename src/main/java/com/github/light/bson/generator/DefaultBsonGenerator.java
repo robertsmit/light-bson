@@ -1,12 +1,11 @@
 package com.github.light.bson.generator;
 
+import com.github.light.bson.util.BsonConstants;
 import com.github.light.bson.util.BsonOutputStream;
-import com.github.light.bson.util.FieldCache;
 import com.github.light.bson.generator.state.StartWriteState;
 import com.github.light.bson.generator.state.WriteState;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Date;
 
 /**
@@ -102,6 +101,12 @@ public class DefaultBsonGenerator implements BsonGenerator {
     public BsonGenerator writeDatetime(Date date) throws IOException {
         long millis = date.getTime();
         return writeDatetime(millis);
+    }
+
+    @Override
+    public BsonGenerator writeBinary(byte subtype, byte[] value, int offset, int length) throws IOException {
+        state = state.writeBinary(out, subtype, value, offset, length);
+        return this;
     }
 
     @Override

@@ -22,4 +22,5 @@ public interface BsonGenerator extends Closeable {
     BsonGenerator writeNumber(long value) throws IOException;
     BsonGenerator writeDatetime(long millis) throws IOException;
     BsonGenerator writeDatetime(Date date) throws IOException;
+    BsonGenerator writeBinary(byte subtype, byte[] value, int offset, int length) throws IOException;
 }

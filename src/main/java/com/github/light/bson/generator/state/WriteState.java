@@ -8,6 +8,10 @@ import java.io.IOException;
  * Created by rob on 20-10-14.
  */
 public abstract class WriteState {
+    public WriteState writeBinary(BsonOutputStream out, byte subtype, byte[] value, int offset, int length) throws IOException {
+        throw new IllegalStateException();
+    }
+
     public WriteState writeField(String name, BsonOutputStream out) throws IOException {
         throw new IllegalStateException();
     }

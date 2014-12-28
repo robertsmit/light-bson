@@ -10,13 +10,13 @@ import java.io.OutputStream;
 /**
  * Created by rob on 21-12-14.
  */
-public class JsonFactoryWriter {
-    private final JsonRecipe writer;
+public class JsonFactoryWrapper {
+    private final JsonRecipe recipe;
     private JsonFactory factory;
 
-    public JsonFactoryWriter(JsonFactory factory, JsonRecipe writer) {
+    public JsonFactoryWrapper(JsonFactory factory, JsonRecipe recipe) {
         this.factory = factory;
-        this.writer = writer;
+        this.recipe = recipe;
     }
 
     public byte[] generate() throws IOException {
@@ -32,7 +32,7 @@ public class JsonFactoryWriter {
     }
 
     private void write(JsonGenerator generator) throws IOException {
-        writer.write(generator);
+        recipe.write(generator);
     }
 
 }

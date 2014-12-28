@@ -22,7 +22,7 @@ public class GrowingByteBuffer extends GrowingBuffer {
 
     public void put(byte v) {
         ensureRoom(1);
-        putUnsafe(v);
+        unsafePut(v);
     }
 
     public byte pop() {
@@ -33,27 +33,27 @@ public class GrowingByteBuffer extends GrowingBuffer {
         return buffer[position - 1];
     }
 
-    public void put(byte[] bytes) {
+    public void putAll(byte[] bytes) {
         ensureRoom(bytes.length);
-        putUnsafe(bytes);
+        unsafePutAll(bytes, 0, bytes.length);
     }
 
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, position);
     }
 
-    public void putUnsafe(byte[] bytes) {
-        System.arraycopy(bytes, 0, buffer, position, bytes.length);
-        position += bytes.length;
+    public void unsafePutAll(byte[] bytes, int offset, int length) {
+        System.arraycopy(bytes, offset, buffer, position, length);
+        position += length;
     }
 
-    public void put(int index, byte v) {
-        buffer[index] = v;
-    }
-
-    public void putUnsafe(byte v) {
-        put(position, v);
+    public void unsafePut(byte v) {
+        unsafePut(position, v);
         position += 1;
+    }
+
+    private void unsafePut(int index, byte v) {
+        buffer[index] = v;
     }
 
     @Override

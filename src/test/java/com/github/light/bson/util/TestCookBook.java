@@ -21,6 +21,16 @@ public class TestCookBook {
         };
     }
 
+    public static JsonRecipe binaryData(final byte[] data) {
+        return new ObjectJsonRecipe() {
+            @Override
+            public void writeBody(JsonGenerator generator) throws IOException {
+                generator.writeFieldName("data");
+                generator.writeBinary(data);
+            }
+        };
+    }
+
     public static JsonRecipe polymorphicArray() {
         return new ObjectJsonRecipe() {
             @Override

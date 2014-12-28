@@ -27,6 +27,8 @@ public enum BsonToken {
 
     VALUE_NUMBER_FLOAT(JsonToken.VALUE_NUMBER_FLOAT),
 
+    VALUE_BINARY(JsonToken.VALUE_STRING),
+
 
 
     ;

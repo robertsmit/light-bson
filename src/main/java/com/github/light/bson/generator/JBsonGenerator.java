@@ -1,6 +1,7 @@
 package com.github.light.bson.generator;
 
 import com.fasterxml.jackson.core.*;
+import com.github.light.bson.util.BsonConstants;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -157,7 +158,7 @@ public class JBsonGenerator extends JsonGenerator {
 
     @Override
     public void writeBinary(Base64Variant bv, byte[] data, int offset, int len) throws IOException {
-        throw new UnsupportedOperationException();
+        generator.writeBinary(BsonConstants.BINARY_SUBTYPE_GENERIC, data, offset, len);
     }
 
     @Override

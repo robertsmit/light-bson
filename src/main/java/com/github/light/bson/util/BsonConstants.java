@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
  */
 public final class BsonConstants {
 
+
     private BsonConstants() {}
 
     public static final byte TERMINATOR = 0;
@@ -18,6 +19,8 @@ public final class BsonConstants {
     public static final byte OBJECT = 3;
 
     public static final byte ARRAY = 4;
+
+    public static final byte BINARY = 5;
 
     public static final byte BOOLEAN = 8;
 
@@ -34,5 +37,7 @@ public final class BsonConstants {
     public static final byte INT64 = 18;
 
     public static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
+
+    public static final byte BINARY_SUBTYPE_GENERIC = 0;
 }
 
