@@ -25,19 +25,6 @@ public class GrowingByteBuffer extends GrowingBuffer {
         unsafePut(v);
     }
 
-    public byte pop() {
-        return buffer[--position];
-    }
-
-    public byte peek() {
-        return buffer[position - 1];
-    }
-
-    public void putAll(byte[] bytes) {
-        ensureRoom(bytes.length);
-        unsafePutAll(bytes, 0, bytes.length);
-    }
-
     public byte[] toByteArray() {
         return Arrays.copyOf(buffer, position);
     }

@@ -1,5 +1,6 @@
 package com.github.light.bson;
 
+import com.github.light.bson.util.BufferingBsonOutputStream;
 import com.github.light.bson.util.BsonInputStream;
 import com.github.light.bson.util.BsonOutputStream;
 import org.junit.Assert;
@@ -130,7 +131,7 @@ public class BsonStreamTest {
 
     private <V> void testSerialization(V value, InOut<V> inOut) throws IOException {
         ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-        BsonOutputStream bsonOut = new BsonOutputStream(bytesOut);
+        BsonOutputStream bsonOut = new BufferingBsonOutputStream(bytesOut);
         inOut.writeOn(bsonOut, value);
         bsonOut.close();
         ByteArrayInputStream bytesIn = new ByteArrayInputStream(bytesOut.toByteArray());

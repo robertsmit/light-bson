@@ -5,135 +5,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Created by rob on 12-10-14.
+ * Created by rob on 4-1-15.
  */
-public class BsonOutputStream implements Closeable {
-    public static final int DEFAULT_INITIAL_BUFFER_SIZE = 2000;
-    private GrowingByteBuffer buffer;
-    private FieldCache fieldCache;
-    private OutputStream out;
+public interface BsonOutputStream extends Closeable {
+    int startDocument() throws IOException;
 
-    public BsonOutputStream(OutputStream out) {
-        this(out, 2000, new FieldCache());
-    }
+    void endDocument(int mark) throws IOException;
 
-    public BsonOutputStream(OutputStream out, FieldCache cache) {
-        this(out, DEFAULT_INITIAL_BUFFER_SIZE, cache);
-    }
+    void writeField(String name, byte type) throws IOException;
 
-    public BsonOutputStream(OutputStream out, int initialBufferSize, FieldCache fieldCache) {
-        this(out, new GrowingByteBuffer(initialBufferSize), fieldCache);
-    }
+    void writeBinary(byte subtype, byte[] bytes, int offset, int length) throws IOException;
 
-    public BsonOutputStream(OutputStream out, GrowingByteBuffer buffer, FieldCache fieldCache) {
-        this.out = out;
-        this.buffer = buffer;
-        this.fieldCache = fieldCache;
-        buffer.reset();
-    }
+    void writeBoolean(boolean value) throws IOException;
 
-    public int startDocument() throws IOException {
-        int mark = buffer.position();
-        buffer.position(mark + 4);
-        return mark;
-    }
+    void writeDouble(double value) throws IOException;
 
-    public void endDocument(int mark) throws IOException {
-        onWrite(1);
-        write(BsonConstants.TERMINATOR);
-        int position = buffer.position();
-        buffer.position(mark);
-        writeInt(position - mark);
-        buffer.position(position);
-    }
+    void writeField(byte[] encodedField, byte type) throws IOException;
 
-    public void writeBoolean(boolean value) throws IOException {
-        onWrite(1);
-        write(value ? BsonConstants.TRUE : BsonConstants.FALSE);
-    }
+    void writeInt(int v) throws IOException;
 
-    public void writeBinary(byte subtype, byte[] bytes, int offset, int length) throws IOException {
-        onWrite(4 + 1 + length);
-        writeInt(length);
-        write(subtype);
-        write(bytes, offset, length);
-    }
+    void writeLong(long v) throws IOException;
 
-    public void writeDouble(double value) throws IOException {
-        writeLong(Double.doubleToRawLongBits(value));
-    }
+    void writeString(String v) throws IOException;
 
-    public void writeInt(int v) throws IOException {
-        onWrite(4);
-        write(extractByte(v, 0));
-        write(extractByte(v, 1));
-        write(extractByte(v, 2));
-        write(extractByte(v, 3));
-    }
-
-    public void writeLong(long v) throws IOException {
-        onWrite(8);
-        write(extractByte(v, 0));
-        write(extractByte(v, 1));
-        write(extractByte(v, 2));
-        write(extractByte(v, 3));
-        write(extractByte(v, 4));
-        write(extractByte(v, 5));
-        write(extractByte(v, 6));
-        write(extractByte(v, 7));
-    }
-
-    public void writeString(String v) throws IOException {
-        byte[] content = v.getBytes(BsonConstants.UTF8_CHARSET);
-        writeString(content);
-    }
-
-    public void writeString(byte[] content) throws IOException {
-        int size = content.length + 1;
-        writeInt(size);
-        onWrite(size);
-        write(content);
-        write(BsonConstants.TERMINATOR);
-    }
-
-    @Override
-    public void close() throws IOException {
-        out.write(buffer.toByteArray());
-    }
-
-    public void writeField(String name, byte type) throws IOException {
-        byte[] encodedField = fieldCache.getEncodeField(name);
-        writeField(encodedField, type);
-    }
-
-    public void writeField(byte[] encodedField, byte type) throws IOException {
-        onWrite(encodedField.length + 2);
-        write(type);
-        write(encodedField);
-        write(BsonConstants.TERMINATOR);
-    }
-
-    private byte extractByte(int v, int position) {
-        return (byte)((v >> position * 8));
-    }
-
-    private byte extractByte(long v, int position) {
-        return (byte)((v >> position * 8));
-    }
-
-    private void write(byte b) {
-        buffer.unsafePut(b);
-    }
-
-    private void write(byte[] b) {
-        buffer.unsafePutAll(b, 0, b.length);
-    }
-
-    private void write(byte[] b, int offset, int length) {
-        buffer.unsafePutAll(b, offset, length);
-    }
-
-    private void onWrite(int size) {
-        buffer.ensureRoom(size);
-    }
+    void writeString(byte[] content) throws IOException;
 }

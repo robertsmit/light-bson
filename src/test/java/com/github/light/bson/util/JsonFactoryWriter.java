@@ -10,11 +10,11 @@ import java.io.OutputStream;
 /**
  * Created by rob on 21-12-14.
  */
-public class JsonFactoryWrapper {
+public class JsonFactoryWriter {
     private final JsonRecipe recipe;
     private JsonFactory factory;
 
-    public JsonFactoryWrapper(JsonFactory factory, JsonRecipe recipe) {
+    public JsonFactoryWriter(JsonFactory factory, JsonRecipe recipe) {
         this.factory = factory;
         this.recipe = recipe;
     }
